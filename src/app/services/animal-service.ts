@@ -9,13 +9,24 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AnimalService {
+  animalService: any;
   constructor(private http: HttpClient) {}
   apiUri = '/api/animals';
   httpOptions = new HttpHeaders().set('Content-Type', 'application/json');
+  getAllAnimalsData(): Observable<any> {
+    return this.http.get<any>(this.apiUri)
+  }
+  animalList:any= [];
+  
+  getAllAnimals() {
+      this.animalService.getAllAnimalsData().subscribe((data: {}) => {
+      this.animalList=data;
+    });
+  }
+  ngOnInit() {
+    this.getAllAnimals();
+  }
 
-  getAnimals(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUri);
-  }
 }
 
 
